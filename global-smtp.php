@@ -27,6 +27,12 @@ class Global_SMTP_Mailer {
 	*/
 	function __construct() {
 
+	//beatelite added per https://premium.wpmudev.org/forums/topic/what-is-the-best-multi-site-pluging-for-custom-smtp#post-532065
+	global $blog_id;
+	$blog_details = get_blog_details($blog_id);
+	$phpmailer->From = 'wordpress@'.$blog_details->domain;
+	$phpmailer->FromName = $blog_details->blogname;
+
 		$this->prepare_settings();
 		$this->errors = $this->validate();
 		$this->cancel = array( 'from' => false, 'from_name' => false );
